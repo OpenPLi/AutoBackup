@@ -777,13 +777,13 @@ class Config(ConfigListScreen, Screen):
 		else:
 			# retry with less strict filters - f.eg. using MAC only - and let the user choose from available archives
 			self.activeArchiveFilters = ARCHIVE_FILTERS_RESTORE_FALLBACK.copy()
-			self.doRestorePrevious()
+			self.doRestorePrevious(fallback=True)
 
 	def doRestorePreviousManual(self):
 		self.activeArchiveFilters = ARCHIVE_FILTERS_MANUAL.copy()
 		self.doRestorePrevious()
 
-	def doRestorePrevious(self, selectedIndex=None):
+	def doRestorePrevious(self, selectedIndex=None, fallback=False):
 		backupDir = os.path.join(self.cfgwhere_archives.value or self.cfgwhere.value, "backup")
 		if self.activeArchiveFilters is None:
 			self.activeArchiveFilters = ARCHIVE_FILTERS_RESTORE.copy()
@@ -793,7 +793,8 @@ class Config(ConfigListScreen, Screen):
 			backupDir,
 			self.activeArchiveFilters,
 			selectedIndex,
-			self
+			self,
+			fallback
 		)
 
 	def doRestorePreviousClosed(self, result):
@@ -1350,10 +1351,11 @@ class ArchiveList(Screen):
 	</screen>
 	"""
 
-	def __init__(self, session, backupDir, filters, selectedIndex, configScreen):
+	def __init__(self, session, backupDir, filters, selectedIndex, configScreen, fallback=False):
 		Screen.__init__(self, session)
 		self.skinName = ["ArchiveList"]
 		self.setTitle(_("Backup archive list"))
+		self.fallback = fallback
 
 		self.backupDir = backupDir
 		self.archiveFilters = filters.copy()
@@ -1407,7 +1409,8 @@ class ArchiveList(Screen):
 			archives.reverse()
 
 		self["list"].setList(archives)
-		title = _("Backup archive list") + showFilterStatus(self.archiveFilters)
+		title = _("No exact match found - other archives") if self.fallback else _("Backup archive list")
+		title += showFilterStatus(self.archiveFilters)
 		if ENABLE_EXPERIMENTAL_FEATURES and elapsed is not None:
 			if checked:
 				title += " - %s / %s" % (colorText(COLOR_LIGHTGREEN, str(len(archives))), colorText(COLOR_LIGHTGREEN, str(checked)))
