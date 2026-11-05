@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: enigma2-plugin-extensions-autobackup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-11-05 05:12+0100\n"
-"PO-Revision-Date: 2026-11-04 15:29+0100\n"
+"PO-Revision-Date: 2026-11-05 09:25+0100\n"
 "Last-Translator: Pr2\n"
 "Language-Team: french\n"
 "Language: fr\n"
@@ -370,7 +370,7 @@ msgstr ""
 
 #: ../ui.py:1412
 msgid "No exact match found - other archives"
-msgstr ""
+msgstr "Aucune correspondance exacte trouvée – autres archives"
 
 #: ../ui.py:408
 msgid "No local backup present"
