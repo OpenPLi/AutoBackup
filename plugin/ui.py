@@ -282,10 +282,9 @@ class Config(ConfigListScreen, Screen):
 </screen>"""
 
 	def __init__(self, session, args=0):
-		self.session = session
+		Screen.__init__(self, session)
 		self.skinName = ["Config_AutoBackup", "Config"]
 		self.setup_title = _("AutoBackup Configuration")
-		Screen.__init__(self, session)
 		self.cfg = config.plugins.autobackup
 		choices = getLocationChoices()
 		if choices:
