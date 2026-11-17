@@ -1563,6 +1563,7 @@ class ArchiveFilter(ConfigListScreen, Screen):
 
 	def __init__(self, session, filters):
 		Screen.__init__(self, session)
+		self.skinName = ["ArchiveFilter", "Setup"]
 		self.setTitle(_("Archive filters"))
 
 		self.filterMac = ConfigYesNo(default=filters.get("mac", True))
